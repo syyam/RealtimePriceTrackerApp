@@ -67,19 +67,19 @@ fun DetailsScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            if (uiState.priceUpdate != null) {
+            uiState.priceUpdate?.let { priceUpdate ->
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "$${String.format("%.2f", uiState.priceUpdate.price)}",
+                        text = "$${String.format("%.2f", priceUpdate.price)}",
                         style = MaterialTheme.typography.displayMedium
                     )
-                    PriceChangeIndicator(priceChange = uiState.priceUpdate.priceChange)
+                    PriceChangeIndicator(priceChange = priceUpdate.priceChange)
                 }
-            } else {
+            } ?: run {
                 Text(
                     text = "Start tracking to see live price",
                     style = MaterialTheme.typography.titleMedium,
