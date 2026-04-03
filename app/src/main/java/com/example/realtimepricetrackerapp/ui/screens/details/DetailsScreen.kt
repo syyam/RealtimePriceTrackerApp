@@ -52,65 +52,56 @@ fun DetailsScreen(
             )
         }
     ) { paddingValues ->
-        if (uiState.priceUpdate == null) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues),
-                contentAlignment = Alignment.Center
-            ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(16.dp)
+        ) {
+            uiState.stockSymbol?.let { stock ->
                 Text(
-                    text = "Waiting for price update...",
-                    style = MaterialTheme.typography.bodyLarge,
+                    text = stock.name,
+                    style = MaterialTheme.typography.headlineMedium
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            if (uiState.priceUpdate != null) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "$${String.format("%.2f", uiState.priceUpdate.price)}",
+                        style = MaterialTheme.typography.displayMedium
+                    )
+                    PriceChangeIndicator(priceChange = uiState.priceUpdate.priceChange)
+                }
+            } else {
+                Text(
+                    text = "Start tracking to see live price",
+                    style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-        } else {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-                    .padding(16.dp)
-            ) {
-                uiState.stockSymbol?.let { stock ->
-                    Text(
-                        text = stock.name,
-                        style = MaterialTheme.typography.headlineMedium
-                    )
-                }
 
-                Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
-                uiState.priceUpdate?.let { priceUpdate ->
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = "$${String.format("%.2f", priceUpdate.price)}",
-                            style = MaterialTheme.typography.displayMedium
-                        )
-                        PriceChangeIndicator(priceChange = priceUpdate.priceChange)
-                    }
-                }
+            Text(
+                text = "About",
+                style = MaterialTheme.typography.titleLarge
+            )
 
-                Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
+            uiState.stockSymbol?.let { stock ->
                 Text(
-                    text = "About",
-                    style = MaterialTheme.typography.titleLarge
+                    text = stock.description,
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                uiState.stockSymbol?.let { stock ->
-                    Text(
-                        text = stock.description,
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
             }
         }
     }
