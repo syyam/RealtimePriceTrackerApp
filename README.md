@@ -28,23 +28,6 @@ The main feed screen shows all stocks sorted by price (highest first), with gree
 - Coroutines for async operations
 - Material Design 3
 
-## Project Structure
-
-```
-app/src/main/java/.../
-├── data/
-│   ├── model/              # Data classes (StockSymbol, PriceUpdate, etc.)
-│   └── websocket/          # WebSocket manager and repository
-├── ui/
-│   ├── screens/
-│   │   ├── feed/          # Main feed screen + ViewModel
-│   │   └── details/       # Details screen + ViewModel
-│   ├── components/        # Reusable UI components
-│   ├── navigation/        # NavHost setup
-│   └── theme/            # App theming
-└── util/                 # Stock symbols list
-```
-
 ## How to Run
 
 1. Clone the repo
